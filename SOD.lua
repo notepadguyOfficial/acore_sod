@@ -27,10 +27,12 @@ end
 
 -- Hardcode this shit
 local function RemoveAllAppliedBuffs(player)
-
-	for _, buff in ipairs(BUFFS) do
-		player:RemoveAura(buff.spellId)
-	end
+	player:RemoveAura(80865)
+	player:RemoveAura(80866)
+	player:RemoveAura(80867)
+	player:RemoveAura(80868)
+	player:RemoveAura(80869)
+	player:RemoveAura(80870)
 end
 
 -- Get correct buff based on level
