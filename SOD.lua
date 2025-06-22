@@ -2,13 +2,15 @@ local PLAYER_EVENT_ON_LOGIN = 3
 local PLAYER_EVENT_ON_LEVEL_CHANGE = 13
 
 local BUFFS = {
-    { minLevel = 1, maxLevel = 49, spellId = 80865 },  -- 200%
-    { minLevel = 50, maxLevel = 59, spellId = 80866 }, -- 150%
-    { minLevel = 60, maxLevel = 69, spellId = 80867 }, -- 100%
-    { minLevel = 70, maxLevel = 80, spellId = 80868 }, -- 50%
+    { minLevel = 1,  maxLevel = 25, spellId = 80865 },  -- +50%
+    { minLevel = 26, maxLevel = 40, spellId = 80866 },  -- +100%
+    { minLevel = 41, maxLevel = 50, spellId = 80867 },  -- +150%
+    { minLevel = 51, maxLevel = 60, spellId = 80868 },  -- +200%
+    { minLevel = 61, maxLevel = 70, spellId = 80869 },  -- +250%
+    { minLevel = 71, maxLevel = 80, spellId = 80870 },  -- +300%
 }
 
--- Helper to log messages with player name | Debugging Purpose
+-- Helper to log messages with player name
 local function Log(player, message)
     print(string.format("[Discoverer's Delight] [%s] %s", player:GetName(), message))
 end
