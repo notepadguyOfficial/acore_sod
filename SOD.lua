@@ -45,11 +45,8 @@ local function ApplyCorrectBuff(player)
         return
     end
 
-    RemoveAllBuffs(player)
-
     if not player:HasAura(spellId) then
-        -- player:AddAura(spellId, player)
-		player:CastSpell(player, spellId, true)
+        player:CastSpell(player, spellId, true)
         Log(player, "Applied buff spell ID: " .. spellId .. " for level " .. level)
     else
         Log(player, "Buff spell ID " .. spellId .. " already active at level " .. level)
@@ -59,12 +56,14 @@ end
 -- Player login event
 local function OnLogin(event, player)
     Log(player, "Player logged in at level " .. player:GetLevel())
+    RemoveAllBuffs(player)           -- Ensure all buffs are removed first
     ApplyCorrectBuff(player)
 end
 
 -- Player level-up event
 local function OnLevelChanged(event, player, oldLevel)
     Log(player, "Level changed from " .. oldLevel .. " to " .. player:GetLevel())
+    RemoveAllBuffs(player)           -- Ensure all buffs are removed first
     ApplyCorrectBuff(player)
 end
 
