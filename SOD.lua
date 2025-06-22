@@ -1,23 +1,29 @@
-local BUFFS = {
-    { minLevel = 1, maxLevel = 49, spellId = 200101 },  -- 200%
-    { minLevel = 50, maxLevel = 59, spellId = 200102 }, -- 150%
-    { minLevel = 60, maxLevel = 69, spellId = 200103 }, -- 100%
-    { minLevel = 70, maxLevel = 80, spellId = 200104 }, -- 50%
-}
-
 local PLAYER_EVENT_ON_LOGIN = 3
 local PLAYER_EVENT_ON_LEVEL_CHANGE = 13
 
--- Remove all possible Discoverer's Delight buffs
+local BUFFS = {
+    { minLevel = 1, maxLevel = 49, spellId = 80865 },  -- 200%
+    { minLevel = 50, maxLevel = 59, spellId = 80866 }, -- 150%
+    { minLevel = 60, maxLevel = 69, spellId = 80867 }, -- 100%
+    { minLevel = 70, maxLevel = 80, spellId = 80868 }, -- 50%
+}
+
+-- Helper to log messages with player name | Debugging Purpose
+local function Log(player, message)
+    print(string.format("[Discoverer's Delight] [%s] %s", player:GetName(), message))
+end
+
+-- Remove all buff variants
 local function RemoveAllBuffs(player)
     for _, buff in ipairs(BUFFS) do
         if player:HasAura(buff.spellId) then
             player:RemoveAura(buff.spellId)
+            Log(player, "Removed buff spell ID: " .. buff.spellId)
         end
     end
 end
 
--- Get the appropriate buff for the given level
+-- Get correct buff based on level
 local function GetBuffForLevel(level)
     for _, buff in ipairs(BUFFS) do
         if level >= buff.minLevel and level <= buff.maxLevel then
@@ -27,23 +33,36 @@ local function GetBuffForLevel(level)
     return nil
 end
 
--- Apply the correct buff to the player
+-- Apply the correct buff based on level
 local function ApplyCorrectBuff(player)
     local level = player:GetLevel()
     local spellId = GetBuffForLevel(level)
-    if spellId then
-        RemoveAllBuffs(player)
-        player:AddAura(spellId, player)
+
+    if not spellId then
+        Log(player, "No valid buff found for level " .. level)
+        return
+    end
+
+    RemoveAllBuffs(player)
+
+    if not player:HasAura(spellId) then
+        -- player:AddAura(spellId, player)
+		player:CastSpell(player, spellId, true)
+        Log(player, "Applied buff spell ID: " .. spellId .. " for level " .. level)
+    else
+        Log(player, "Buff spell ID " .. spellId .. " already active at level " .. level)
     end
 end
 
--- Event: Player logs in
+-- Player login event
 local function OnLogin(event, player)
+    Log(player, "Player logged in at level " .. player:GetLevel())
     ApplyCorrectBuff(player)
 end
 
--- Event: Player levels up
+-- Player level-up event
 local function OnLevelChanged(event, player, oldLevel)
+    Log(player, "Level changed from " .. oldLevel .. " to " .. player:GetLevel())
     ApplyCorrectBuff(player)
 end
 

@@ -2,7 +2,9 @@
 LUA script for Azerothcore with ElunaLUA that gives buff which is Discoverer's Delight similar to SOD which is also base on player's level range for different Exp Bonus.
 
 ## Spell ID's
-- 200101 = 200% / 1 - 49
-- 200102 = 150% / 50 - 59
-- 200103 = 100% / 60 = 69
-- 200104 = 50% / 70 - 80
+- 80865 = 200% / 1 - 49
+- 80866 = 150% / 50 - 59
+- 80867 = 100% / 60 = 69
+- 80868 = 50% / 70 - 80
+
+https://drive.google.com/drive/folders/1GrEx8Fagv4luzbppD3ijoBmHdw6TsfoV?usp=sharing
