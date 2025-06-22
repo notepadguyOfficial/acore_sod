@@ -17,11 +17,19 @@ end
 
 -- Remove all buff variants
 local function RemoveAllBuffs(player)
+    local toRemove = {}
+
+    -- First collect all matching buffs that are currently active
     for _, buff in ipairs(BUFFS) do
         if player:HasAura(buff.spellId) then
-            player:RemoveAura(buff.spellId)
-            Log(player, "Removed buff spell ID: " .. buff.spellId)
+            table.insert(toRemove, buff.spellId)
         end
+    end
+
+    -- Remove them all safely in a second loop
+    for _, spellId in ipairs(toRemove) do
+        player:RemoveAura(spellId)
+        Log(player, "Removed buff spell ID: " .. spellId)
     end
 end
 
