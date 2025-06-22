@@ -7,8 +7,8 @@ LUA script for Azerothcore with ElunaLUA that gives buff which is Discoverer's D
 | 26–40       | ×2.0          | +100%    | `80866`  |
 | 41–50       | ×2.5          | +150%    | `80867`  |
 | 51–60       | ×3.0          | +200%    | `80868`  |
-| 61–70       | ×2.5          | +150%    | `80869`  |
-| 71–80       | ×2.0          | +100%    | `80870`  |
+| 61–70       | ×2.5          | +250%    | `80869`  |
+| 71–80       | ×2.0          | +300%    | `80870`  |
 
 Mimicking Official WoW Classic SoD buff phasing (If im correct).
 
