@@ -17,20 +17,20 @@ end
 
 -- Remove all buff variants
 local function RemoveAllBuffs(player)
-    local toRemove = {}
-
-    -- First collect all matching buffs that are currently active
     for _, buff in ipairs(BUFFS) do
         if player:HasAura(buff.spellId) then
-            table.insert(toRemove, buff.spellId)
+            player:RemoveAura(buff.spellId)
+            Log(player, "Removed buff spell ID: " .. buff.spellId)
         end
     end
+end
 
-    -- Remove them all safely in a second loop
-    for _, spellId in ipairs(toRemove) do
-        player:RemoveAura(spellId)
-        Log(player, "Removed buff spell ID: " .. spellId)
-    end
+-- Hardcode this shit
+local function RemoveAllAppliedBuffs(player)
+
+	for _, buff in ipairs(BUFFS) do
+		player:RemoveAura(buff.spellId)
+	end
 end
 
 -- Get correct buff based on level
@@ -56,6 +56,7 @@ local function ApplyCorrectBuff(player)
     RemoveAllBuffs(player)
 
     if not player:HasAura(spellId) then
+        -- player:AddAura(spellId, player)
 		player:CastSpell(player, spellId, true)
         Log(player, "Applied buff spell ID: " .. spellId .. " for level " .. level)
     else
@@ -66,7 +67,7 @@ end
 -- Player login event
 local function OnLogin(event, player)
     Log(player, "Player logged in at level " .. player:GetLevel())
-    RemoveAllBuffs(player)
+	RemoveAllAppliedBuffs(player)
     ApplyCorrectBuff(player)
 end
 
